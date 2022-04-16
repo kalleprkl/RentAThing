@@ -47,7 +47,7 @@ namespace RentAThing.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutThing(int id, Thing thing)
         {
-            if (id != thing.ID)
+            if (id != thing.Id)
             {
                 return BadRequest();
             }
@@ -79,9 +79,23 @@ namespace RentAThing.Controllers
         public async Task<ActionResult<Thing>> PostThing(Thing thing)
         {
             _context.Things.Add(thing);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (ThingExists(thing.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetThing", new { id = thing.ID }, thing);
+            return CreatedAtAction("GetThing", new { id = thing.Id }, thing);
         }
 
         // DELETE: api/Things/5
@@ -102,7 +116,7 @@ namespace RentAThing.Controllers
 
         private bool ThingExists(int id)
         {
-            return _context.Things.Any(e => e.ID == id);
+            return _context.Things.Any(e => e.Id == id);
         }
     }
 }

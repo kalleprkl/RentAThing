@@ -18,7 +18,9 @@ namespace RentAThing.Models
                     return;   
                 }
 
-                context.Things.Add(new Thing { ID = 1 });
+                context.Things.Add(new Thing { Id = 1 });
+                context.Customers.Add(new Customer { Id = 1 });
+                context.Contracts.Add(new Contract { CustomerId = 1, ThingId = 1 });
                 context.SaveChanges();
             }
         }
