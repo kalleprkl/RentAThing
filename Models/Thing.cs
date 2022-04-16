@@ -1,7 +1,6 @@
-namespace RentAThing.Models
+namespace RentAThing.Models;
+
+public class Thing
 {
-    public class Thing
-    {   
-        public int ID { get; set; }
-    }
+    public int ID { get; set; }
 }

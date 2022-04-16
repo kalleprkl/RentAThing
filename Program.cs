@@ -1,6 +1,12 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using RentAThing.Models;
+using Microsoft.EntityFrameworkCore;
 
-app.MapGet("/", () => "Hello World!");
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+builder.Services.AddDbContext<RentalContext>(opt =>
+    opt.UseInMemoryDatabase("RentAThing"));
+
+var app = builder.Build();
 
 app.Run();
