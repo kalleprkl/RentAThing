@@ -42,6 +42,20 @@ namespace RentAThing.Controllers
             return contract;
         }
 
+        // GET: api/Contracts/Customer/1
+        [HttpGet("Customer/{customerId}")]
+        public async Task<ActionResult<IEnumerable<Contract>>> GetContractByCustomer(int customerId)
+        {
+            var contracts = await _context.Contracts.Where(c => c.CustomerId == customerId).ToListAsync();
+
+            if (contracts.Count() == 0)
+            {
+                return NotFound();
+            }
+
+            return contracts;
+        }
+
         // PUT: api/Contracts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
